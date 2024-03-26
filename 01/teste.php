@@ -39,4 +39,11 @@
     //Testando o case sensitive - palavras reservadas
     echo "Texto 1 <br>";
     ECHO "Texto 2 <br>";
+
+    //Testando o case sensitive = variáveis
+
+    $primeiroNome= "Carlos";
+
+    echo $primeiroNome;
+    ECHO $PRIMEIRONOME;
 ?>
