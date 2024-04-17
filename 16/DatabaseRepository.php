@@ -40,6 +40,18 @@ class DatabaseRepository
         return $contact;
     }
 
+    public static function getContactByName($nome) {
+        $connection = self::connect();
+        $result = $connection->query("SELECT * FROM contatos_info WHERE nome = '$nome'");
+
+        $contact = null;
+        if($result->num_rows > 0) {
+            $contact = $result->fetch_assoc();
+        }
+        $connection->close();
+        return $contact;
+    }
+
     public static function insertContact($nome, $telefone, $email) {
         $connection = self::connect();
         $sql = "INSERT INTO contatos_info (nome, telefone, email) VALUES ('$nome', '$telefone', '$email')";
