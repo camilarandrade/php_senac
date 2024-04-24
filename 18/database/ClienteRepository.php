@@ -1,5 +1,6 @@
 <?php
 require_once 'DatabaseRepository.php';
+require_once '../model/cliente.php';
 
 class ClienteRepository {
     
@@ -24,15 +25,17 @@ class ClienteRepository {
         $result = $connection->query($sql);
 
         $cliente = null;
-        if($result->num_rows > 0) {
+        if($result->num_rows > 0) {            
             $cliente = $result->fetch_assoc();
         }
         $connection->close();
         return $cliente;
     }
 
-    public static function insertCliente($nome, $cpf) {
+    public static function insertCliente(Cliente $cliente) {
         $connection = DatabaseRepository::connect();
+        $nome = $cliente->getNome();
+        $cpf = $cliente->getCpf();
         $sql = "INSERT INTO cliente (nome, cpf) VALUES ('$nome', '$cpf')";
         $success = $connection->query($sql);
         $connection->close();
