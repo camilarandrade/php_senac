@@ -34,7 +34,7 @@ class ContaRepository {
     public static function insertConta($cliente_id, $numero, $saldo, $tipo, $limite_cheque_especial, $taxa_rendimento) {
         $connection = DatabaseRepository::connect();
         $sql = "INSERT INTO conta (cliente_id, numero, saldo, tipo, limite_cheque_especial,	taxa_rendimento)
-                VALUES ($cliente_id, $numero, $saldo, '$tipo', $limite_cheque_especial, $taxa_rendimento)";
+                VALUES ($cliente_id, $numero, $saldo, '$tipo', '$limite_cheque_especial', '$taxa_rendimento')";
         $success = $connection->query($sql);
         $connection->close();
         return $success;
@@ -42,7 +42,7 @@ class ContaRepository {
 
     public static function updateConta($id_conta, $saldo, $limite_cheque_especial, $taxa_rendimento) {
         $connection = DatabaseRepository::connect();
-        $sql = "UPDATE conta SET saldo=$saldo, limite_cheque_especial=$limite_cheque_especial, taxa_rendimento =$taxa_rendimento
+        $sql = "UPDATE conta SET saldo=$saldo, limite_cheque_especial='$limite_cheque_especial', taxa_rendimento ='$taxa_rendimento'
                 WHERE id=$id_conta";
         $success = $connection->query($sql);
         $connection->close();

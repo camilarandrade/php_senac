@@ -25,8 +25,9 @@ class ClienteRepository {
         $result = $connection->query($sql);
 
         $cliente = null;
-        if($result->num_rows > 0) {            
-            $cliente = $result->fetch_assoc();
+        if($result->num_rows > 0) {  
+            $row = $result->fetch_assoc();
+            $cliente = $row;
         }
         $connection->close();
         return $cliente;
@@ -42,8 +43,11 @@ class ClienteRepository {
         return $success;
     }
 
-    public static function updateCliente($id, $nome, $cpf) {
+    public static function updateCliente(Cliente $cliente) {
         $connection = DatabaseRepository::connect();
+        $id = $cliente->getId();
+        $nome = $cliente->getNome();
+        $cpf = $cliente->getCpf();
         $sql = "UPDATE cliente SET nome='$nome', cpf='$cpf' WHERE id=$id";
         $success = $connection->query($sql);
         $connection->close();
