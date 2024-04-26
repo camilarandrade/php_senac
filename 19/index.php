@@ -1,17 +1,20 @@
 <?php
-require_once 'database/PedidoRepository.php';
-require_once 'database/ProdutoRepository.php';
+require_once 'controller/PedidoController.php';
+require_once 'controller/ProdutoController.php';
 
+$entity = $_GET['entity'];
 $action = $_GET['action'];
 
-switch($action) {
-    case 'listar':
-        echo json_encode(PedidoRepository::getAllPedidos());
+switch($entity) {
+    case 'pedido':        
+        PedidoController::handleRequest($action);
         break;
-    case 'listarProdutos':
-        echo json_encode(ProdutoRepository::getAllProdutos());
+    case 'produto':
+        ProdutoController::handleRequest($action);
         break;
     default:
+        http_response_code(400);
+        echo json_encode(['error' => 'Entidade inválida!']);
         break;
 }
 
