@@ -10,17 +10,6 @@ class Pedido implements JsonSerializable {
         $this->status = $status;
     }
 
-    public function jsonSerialize(): array {
-        return [
-            'id' => $this->id,
-            'data_pedido' => $this->data_pedido,
-            'status' => $this->status
-        ];
-    }
-    public function getId() {
-        return $this->id;
-    }
-
     public function getDataPedido() {
         return $this->data_pedido;
     }
@@ -29,7 +18,20 @@ class Pedido implements JsonSerializable {
         return $this->status;
     }
 
-   
-    
+    public function setData($data) {
+        $this->data_pedido = $data;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'data_pedido' => $this->data_pedido,
+            'status' => $this->status
+        ];
+    }
 }
 ?>
