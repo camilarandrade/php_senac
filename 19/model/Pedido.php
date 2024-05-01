@@ -3,6 +3,7 @@ class Pedido implements JsonSerializable {
     private $id;
     private $data_pedido;
     private $status;
+    private $produtos; //Adicionado pelo repository na consulta;
 
     public function __construct($id, $data_pedido, $status) {
         $this->id = $id;
@@ -24,6 +25,10 @@ class Pedido implements JsonSerializable {
 
     public function setStatus($status) {
         $this->status = $status;
+    }
+
+    public function SetProdutos($produtos) {
+        $this->produtos=$produtos; 
     }
 
     public function jsonSerialize(): array {

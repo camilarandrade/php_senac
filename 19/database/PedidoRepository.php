@@ -19,6 +19,36 @@ class PedidoRepository {
         return $pedidos;
     }
 
+    public static function getPedidoWithProdutos($id){
+        $connection= DatabaseRepository::connect();
+        $sql= "SELECT Pedido.*, Produto.id as produto_id, Produto.nome as produto_nome, 
+        Produto.descricao as produto_descricao, Produto.preco as produto_preco 
+        FROM Pedido 
+        LEFT JOIN Produto_Pedido ON Pedido.id = Produto_Pedido.pedido_id 
+        LEFT JOIN Produto ON Produto_Pedido.produto_id = Produto.id
+        WHERE Pedido.id = $id";
+
+        $result= $connection->query($sql); 
+
+        $pedido= null;
+        $produtos= []; 
+
+        if ($result->num_rows>0){
+            while($row= $result->fetch_assoc()){
+                // Cria um objeto do tipo pedido caso ele não exista ainda
+                if ($pedido===null) {
+                    $pedido= new Pedido($row ['id'], $row ['data_pedido'], $row ['produto_preco']);
+                }
+                $produto= new Produto ($row['produto_id'], $row ['produto_descricao'], $row ['produto_preco']);
+                $produtos[]= $produto; 
+            }
+
+            $pedido->setProdutos($produtos);
+        }
+        $connection->close();
+        return $pedido;
+    }
+
     public static function getPedidoById($id) {
         $connection = DatabaseRepository::connect();
         $result = $connection->query("SELECT * FROM pedido WHERE id = $id");
@@ -55,6 +85,7 @@ class PedidoRepository {
     }
 
     public static function deletePedido() {
+        $connection= DatabaseRepository::connect();
 
     }
 }
